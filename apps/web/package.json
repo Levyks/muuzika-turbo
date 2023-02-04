@@ -22,5 +22,8 @@
     "typescript": "^4.9.5",
     "vite": "^4.1.1"
   },
+  "dependencies": {
+    "database": "workspace:*"
+  },
   "type": "module"
 }

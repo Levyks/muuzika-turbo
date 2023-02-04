@@ -1,0 +1,8 @@
+{
+  "name": "muuzika-zod",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "nestjs-zod": "^1.2.1"
+  }
+}

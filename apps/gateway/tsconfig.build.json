@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts", "node_modules/database/**/*.ts", "node_modules/muuzika-zod/**/*.ts"],
+  "exclude": ["test", "dist", "**/*spec.ts"],
+}

@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  previewFeatures = ["views"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Environment {
+  name String @id
+  roomCodeLength Int
+  nicknameMinLength Int
+  nicknameMaxLength Int
+  minNumberOfRounds Int
+  maxNumberOfRounds Int
+  defaultNumberOfRounds Int
+  maxNumberOfPlayers Int
+  minRoundDuration Int
+  maxRoundDuration Int
+  defaultRoundDuration Int
+  servers Server[]
+  serversWithAvailableCapacity ServerWithAvailableCapacity[]
+}
+
+model Server {
+  name String @id
+  registeredAt DateTime @default(now())
+  lastSeenAt DateTime @default(now())
+  environment Environment @relation(fields: [environmentName], references: [name])
+  environmentName String @map("environment")
+  url String
+  capacity Int
+  rooms Room[]
+}
+
+view ServerWithAvailableCapacity {
+  name String @id
+  registeredAt DateTime @default(now())
+  lastSeenAt DateTime @default(now())
+  environment Environment @relation(fields: [environmentName], references: [name])
+  environmentName String @map("environment")
+  url String
+  capacity Int
+  rooms Int
+  available Int
+}
+
+model Room {
+  code String @id
+  createdAt DateTime @default(now())
+  pending Boolean @default(true)
+  server Server @relation(fields: [serverName], references: [name])
+  serverName String @map("server")
+}
