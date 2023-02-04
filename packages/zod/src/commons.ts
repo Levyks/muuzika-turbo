@@ -1,16 +1,12 @@
 import { z } from 'nestjs-zod/z';
-import { ConfigDto } from './dtos';
+import { ConfigDto } from './gateway/config.dtos';
 
 export const zodRoomCode = z.string().nonempty().max(16).describe('room code');
 
 export const zodScore = z.number().positive().describe('Score');
 
 export const zodNicknameFactory = (config: ConfigDto) =>
-  z
-    .string()
-    .min(config.nickname.minLength)
-    .max(config.nickname.maxLength)
-    .describe('nickname');
+  z.string().min(config.nickname.minLength).max(config.nickname.maxLength).describe('nickname');
 
 export const zodNumberOfRoundsFactory = (config: ConfigDto) =>
   z

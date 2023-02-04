@@ -12,12 +12,20 @@ export class ServersService {
     return this.prisma.serverWithAvailableCapacity.findFirst({
       where: {
         environmentName: environment,
-        available: {
+        availableCapacity: {
           gt: 0,
         },
       },
       orderBy: {
-        available: 'desc',
+        availableCapacity: 'desc',
+      },
+    });
+  }
+
+  async getAllServers(): Promise<ServerWithAvailableCapacity[]> {
+    return this.prisma.serverWithAvailableCapacity.findMany({
+      orderBy: {
+        name: 'asc',
       },
     });
   }

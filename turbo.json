@@ -5,7 +5,7 @@
       "cache": false
     },
     "db:push": {
-        "cache": false
+      "cache": false
     },
     "build": {
       "dependsOn": ["^build", "^db:generate"],

@@ -6,7 +6,7 @@ import {
   CreateOrJoinRoomRequestDtoClass,
   zodCreateOrJoinRoomRequestDtoFactory,
 } from 'muuzika-zod';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
 export class EnvironmentService implements OnModuleInit {

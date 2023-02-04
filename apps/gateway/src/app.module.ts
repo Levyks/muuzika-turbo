@@ -1,21 +1,18 @@
 import { Module } from '@nestjs/common';
 import { ZodValidationPipe } from 'nestjs-zod';
-import { APP_PIPE } from '@nestjs/core';
-import { EnvironmentModule } from './environment/environment.module';
-import { PrismaModule } from './prisma/prisma.module';
+import { APP_GUARD, APP_PIPE } from '@nestjs/core';
+
 import { ConfigModule } from '@nestjs/config';
 import { RoomsModule } from './rooms/rooms.module';
-import { ServersModule } from './servers/servers.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    EnvironmentModule,
-    PrismaModule,
     RoomsModule,
-    ServersModule,
+    AuthModule,
   ],
   providers: [
     {

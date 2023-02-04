@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CreateOrJoinRoomRequestDtoClass } from 'muuzika-zod';
 import { RoomsService } from './rooms.service';
 

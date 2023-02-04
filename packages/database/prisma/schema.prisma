@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  provider        = "prisma-client-js"
+  binaryTargets   = ["native", "linux-musl-openssl-3.0.x"]
   previewFeatures = ["views"]
 }
 
@@ -10,48 +10,66 @@ datasource db {
 }
 
 model Environment {
-  name String @id
-  roomCodeLength Int
-  nicknameMinLength Int
-  nicknameMaxLength Int
-  minNumberOfRounds Int
-  maxNumberOfRounds Int
-  defaultNumberOfRounds Int
-  maxNumberOfPlayers Int
-  minRoundDuration Int
-  maxRoundDuration Int
-  defaultRoundDuration Int
-  servers Server[]
+  name                         String                        @id
+  roomCodeLength               Int
+  nicknameMinLength            Int
+  nicknameMaxLength            Int
+  minNumberOfRounds            Int
+  maxNumberOfRounds            Int
+  defaultNumberOfRounds        Int
+  maxNumberOfPlayers           Int
+  minRoundDuration             Int
+  maxRoundDuration             Int
+  defaultRoundDuration         Int
+  servers                      Server[]
   serversWithAvailableCapacity ServerWithAvailableCapacity[]
 }
 
 model Server {
-  name String @id
-  registeredAt DateTime @default(now())
-  lastSeenAt DateTime @default(now())
-  environment Environment @relation(fields: [environmentName], references: [name])
-  environmentName String @map("environment")
-  url String
-  capacity Int
-  rooms Room[]
+  name            String      @id
+  secret          String
+  registeredAt    DateTime    @default(now())
+  lastSeenAt      DateTime    @default(now())
+  environment     Environment @relation(fields: [environmentName], references: [name])
+  environmentName String      @map("environment")
+  url             String
+  capacity        Int
+  rooms           Room[]
 }
 
 view ServerWithAvailableCapacity {
-  name String @id
-  registeredAt DateTime @default(now())
-  lastSeenAt DateTime @default(now())
-  environment Environment @relation(fields: [environmentName], references: [name])
-  environmentName String @map("environment")
-  url String
-  capacity Int
-  rooms Int
-  available Int
+  name              String      @id
+  secret            String
+  registeredAt      DateTime    @default(now())
+  lastSeenAt        DateTime    @default(now())
+  environment       Environment @relation(fields: [environmentName], references: [name])
+  environmentName   String      @map("environment")
+  url               String
+  capacity          Int
+  numberOfRooms     Int
+  availableCapacity Int
 }
 
 model Room {
-  code String @id
-  createdAt DateTime @default(now())
-  pending Boolean @default(true)
-  server Server @relation(fields: [serverName], references: [name])
-  serverName String @map("server")
+  code       String   @id
+  createdAt  DateTime @default(now())
+  pending    Boolean  @default(true)
+  server     Server   @relation(fields: [serverName], references: [name])
+  serverName String   @map("server")
+}
+
+model User {
+  id                    String   @id @default(cuid())
+  email                 String   @unique
+  name                  String   @default("Anonymous")
+  password              String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  lastTokenInvalidation DateTime @default(now())
+  roles                 Role[]
+}
+
+enum Role {
+  ADMIN
+  SERVER
 }

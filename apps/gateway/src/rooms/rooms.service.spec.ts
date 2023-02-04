@@ -84,12 +84,14 @@ describe('RoomsService', () => {
 
     it('should create a room', async () => {
       const nickname = 'NICKNAME';
+      const serverSecret = 'SECRET';
       const serverName = 'SERVER_NAME';
       const serverUrl = 'SERVER_URL';
       const roomCode = 'ROOM_CODE';
 
       mockedServersService.getLeastLoadedServer.mockResolvedValue({
         name: serverName,
+        secret: serverSecret,
         registeredAt: new Date(),
         lastSeenAt: new Date(),
         environmentName: mockedEnvironmentService.current.name,
