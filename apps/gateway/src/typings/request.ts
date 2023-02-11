@@ -1,5 +1,5 @@
 import { User } from 'database';
 
-export type Req = {
+export type Request = {
   user: User;
 };

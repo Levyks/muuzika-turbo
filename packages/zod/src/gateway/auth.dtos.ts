@@ -21,3 +21,10 @@ export const zodUserDto = z.object({
 });
 
 export type UserDto = z.infer<typeof zodUserDto>;
+
+export const zodLoginResponseDto = z.object({
+  accessToken: z.string(),
+  user: zodUserDto
+});
+
+export type LoginResponseDto = z.infer<typeof zodLoginResponseDto>;

@@ -1,5 +1,5 @@
 import { z } from 'nestjs-zod/z';
-import { ConfigDto } from './gateway/config.dtos';
+import type { ConfigDto } from './gateway/config.dtos';
 
 export const zodRoomCode = z.string().nonempty().max(16).describe('room code');
 

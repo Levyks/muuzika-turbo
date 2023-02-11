@@ -4,14 +4,22 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from '@/users/users.service';
 
+import { FastifyRequest } from 'fastify';
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    private readonly configService: ConfigService,
     private readonly usersService: UsersService,
+    configService: ConfigService,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: (req: FastifyRequest) => {
+        const tokenFromBearer = ExtractJwt.fromAuthHeaderAsBearerToken()(
+          req as any,
+        );
+        if (tokenFromBearer) return tokenFromBearer;
+        return req.cookies['accessToken'];
+      },
       ignoreExpiration: false,
       secretOrKey: configService.get<string>('JWT_SECRET'),
     });

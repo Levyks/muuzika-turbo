@@ -29,11 +29,9 @@ export class AuthService {
     return user;
   }
 
-  async login(user: User) {
+  async login(user: User): Promise<string> {
     const now = await this.prismaService.getDatabaseNow();
     const payload = { sub: user.id, iat: Math.floor(now.getTime() / 1000) };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    return this.jwtService.sign(payload);
   }
 }

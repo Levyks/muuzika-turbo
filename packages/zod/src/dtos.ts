@@ -7,7 +7,7 @@ import {
   zodRoundDurationFactory
 } from './commons';
 import { zodRoomRoundsType, zodRoomStatus } from './enums';
-import { ConfigDto } from './gateway/config.dtos';
+import type { ConfigDto } from './gateway/config.dtos';
 
 export const zodPlayerDtoFactory = (config: ConfigDto) =>
   z.object({
